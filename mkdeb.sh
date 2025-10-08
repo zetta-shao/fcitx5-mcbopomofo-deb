@@ -8,10 +8,11 @@ if [ "${1}" = "clean" ]; then rm -rf build DEBIAN ${GITTGT}; fi
 
 if ! [ -r ${GITTGT} ]; then
 source ./debpkh.sh
-git clone https://github.com/openvanilla/fcitx5-mcbopomofo.git ${GITTGT}; 
+git clone https://github.com/openvanilla/fcitx5-mcbopomofo.git ${GITTGT};
 fi
 
 cd ${GITTGT}
+git pull
 GITVER=$(git describe --long --always)
 TITLE=${TGT}"-"${GITVER}
 echo "source:"${TITLE}
@@ -55,4 +56,4 @@ chmod a+x ${DEBPRM}
 
 dpkg-deb -z9 -Zgzip --build ${DEBMTGT}
 mv ${DEBMTGT}.deb ./
-# rm -rf ${DEBMTGT}
+rm -rf ${DEBMTGT}
