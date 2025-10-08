@@ -17,8 +17,8 @@ TITLE=${TGT}"-"${GITVER}
 echo "source:"${TITLE}
 
 if ! [ -r ${PWD}"/build" ]; then
-mkdir -p build DEBIAN
-cmake -B build -DCMAKE_INSTALL_PREFIX=${PWD}/build/usr -DCMAKE_BUILD_TYPE=Release
+mkdir -p build deb
+cmake -B build -DCMAKE_INSTALL_PREFIX=${PWD}/deb/usr -DCMAKE_BUILD_TYPE=Release
 cmake --build build -j$(nproc)
 cmake --install build
 fi
@@ -31,7 +31,9 @@ echo "build deb for "${TITLE}
 DEBMTGT="/tmp/"${TITLE}
 DEBTGT=${DEBMTGT}"/DEBIAN"
 mkdir -p ${DEBTGT}
-cp -a ${PWD}/build/usr ${DEBTGT}/
+cp -a ${GITTGT}/deb/* ${DEBMTGT}/
+mkdir -p ${DEBMTGT}/usr/lib/x86_64-linux-gnu
+mv ${DEBMTGT}/usr/lib/fcitx5 ${DEBMTGT}/usr/lib/x86_64-linux-gnu/
 
 cd ..
 
@@ -53,4 +55,4 @@ chmod a+x ${DEBPRM}
 
 dpkg-deb -z9 -Zgzip --build ${DEBMTGT}
 mv ${DEBMTGT}.deb ./
-rm -rf ${DEBMTGT}
+# rm -rf ${DEBMTGT}
