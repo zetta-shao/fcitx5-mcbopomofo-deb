@@ -14,6 +14,7 @@ fi
 cd ${GITTGT}
 git pull
 GITVER=$(git describe --long --always)
+#GITVER=$(git describe)
 TITLE=${TGT}"-"${GITVER}
 echo "source:"${TITLE}
 
@@ -46,7 +47,7 @@ echo "Package: fcitx5-mcbopomofo" > ${DEBCTL}
 echo "Maintainer: openvanilla https://github.com/openvanilla" >> ${DEBCTL}
 echo "Architecture: amd64" >> ${DEBCTL}
 echo "Version: "${GITVER} >> ${DEBCTL}
-echo "Depends: fcitx5, libfmt9" >> ${DEBCTL}
+echo "Depends: fcitx5, libfmt9|libfmt10" >> ${DEBCTL}
 echo "Description: "${PKGCMT} >> ${DEBCTL}
 
 echo "sudo update-icon-caches /usr/share/icons/*" > ${DEBPIN}
